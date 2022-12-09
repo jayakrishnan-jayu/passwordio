@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="buttonPrimary">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="buttonSecondary">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:backgroundTint">@color/grey</item>
+    </style>
+    <style name="logoText">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">33sp</item>
+        <item name="android:textFontWeight">6600</item>
+    </style>
+</resources>
