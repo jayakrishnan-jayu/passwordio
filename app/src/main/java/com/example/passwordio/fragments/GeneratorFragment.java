@@ -1,4 +1,4 @@
-package com.example.passwordio;
+package com.example.passwordio.fragments;
 
 
 import android.content.ClipData;
@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,12 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.example.passwordio.PasswordGeneratorSettingsPreference;
+import com.example.passwordio.R;
+import com.example.passwordio.Settings;
+import com.example.passwordio.adapters.LoginAdapter;
+import com.example.passwordio.models.Login;
 
 import java.util.Random;
 
@@ -163,6 +171,7 @@ public class GeneratorFragment extends Fragment implements CompoundButton.OnChec
         setRandomString();
 
     }
+
     private void setRandomString() {
         String allowedCharacters = "";
         int n = passLengthSeekBar.getProgress();
@@ -171,21 +180,20 @@ public class GeneratorFragment extends Fragment implements CompoundButton.OnChec
         if (switchNumber.isChecked()) allowedCharacters += numbers;
         if (switchSpecial.isChecked()) allowedCharacters += specialCharacters;
         sb = new StringBuilder(n);
-        for(int i=0;i<n;++i)
+        for (int i = 0; i < n; ++i)
             sb.append(allowedCharacters.charAt(random.nextInt(allowedCharacters.length())));
         resultTextView.setText(sb.toString());
     }
 
 
-
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch(compoundButton.getId()) {
+        switch (compoundButton.getId()) {
             case R.id.genazSwitch:
             case R.id.genAZSwitch:
             case R.id.gen09Switch:
             case R.id.genSpecialSwitch:
-                if (!switchSpecial.isChecked() && !switchNumber.isChecked() && !switchCapital.isChecked() && !switchSmall.isChecked()){
+                if (!switchSpecial.isChecked() && !switchNumber.isChecked() && !switchCapital.isChecked() && !switchSmall.isChecked()) {
                     switchSmall.setChecked(true);
                 }
                 pref.small = switchSmall.isChecked();
@@ -199,7 +207,7 @@ public class GeneratorFragment extends Fragment implements CompoundButton.OnChec
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.genRefresh:
                 setRandomString();
                 break;

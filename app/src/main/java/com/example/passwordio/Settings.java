@@ -12,22 +12,6 @@ enum PasswordioTheme {
     DARK
 }
 
-class PasswordGeneratorSettingsPreference{
-    int passwordLength;
-    boolean small;
-    boolean capital;
-    boolean number;
-    boolean special;
-    
-    public PasswordGeneratorSettingsPreference(int passwordLength, boolean small, boolean capital, boolean number, boolean special) {
-        this.passwordLength = passwordLength;
-        this.small = small;
-        this.capital = capital;
-        this.number = number;
-        this.special = special;
-    }
-}
-
 public class Settings {
     private static Context context;
     private static final String PrefName = "passwordioPref";
