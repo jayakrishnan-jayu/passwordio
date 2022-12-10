@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Passwordio</string>
     <string name="master_password_warning">The master password is the password you use to access your valt. It is very important that you do not forget your master password. There is no way to recover the password in the event that you forget it.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
