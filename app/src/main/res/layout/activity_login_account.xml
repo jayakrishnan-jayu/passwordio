@@ -15,6 +15,7 @@
     app:passwordToggleTint="@color/blue"
     >
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/aLoPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Master Password"
@@ -36,6 +37,7 @@
         />
 
     <Button
+        android:id="@+id/aLoSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/buttonPrimary"

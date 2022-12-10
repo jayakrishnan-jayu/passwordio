@@ -37,7 +37,7 @@ public class Settings {
     }
 
     public boolean isNewUser() {
-        return sharedPreference.getBoolean(prefNewUser, false);
+        return sharedPreference.getBoolean(prefNewUser, true);
     }
 
     public void setNewUser(boolean b) {
