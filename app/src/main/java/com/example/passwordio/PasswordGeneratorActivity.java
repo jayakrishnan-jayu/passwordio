@@ -37,17 +37,32 @@ public class PasswordGeneratorActivity extends AppCompatActivity  implements Com
     SeekBar passLengthSeekBar;
     Button specialIncBtn, specialDecBtn, numberIncBtn, numberDecBtn;
 
+    Settings settings;
+    PasswordGeneratorSettingsPreference pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_generator);
+
+        settings = new Settings(getApplicationContext());
+
+        pref = settings.getGeneratorSettingsPreference();
+
+        if (!pref.special && !pref.small && !pref.number && !pref.capital) pref.small = true;
+        if (pref.passwordLength > 120 || pref.passwordLength < 5) pref.passwordLength = 8;
+
 
         switchCapital = findViewById(R.id.genAZSwitch);
         switchSmall = findViewById(R.id.genazSwitch);
         switchNumber = findViewById(R.id.gen09Switch);
         switchSpecial = findViewById(R.id.genSpecialSwitch);
 
-        switchSmall.setChecked(true);
+        switchSpecial.setChecked(pref.special);
+        switchNumber.setChecked(pref.number);
+        switchCapital.setChecked(pref.capital);
+        switchSmall.setChecked(pref.small);
+
         switchCapital.setOnCheckedChangeListener(this);
         switchSmall.setOnCheckedChangeListener(this);
         switchNumber.setOnCheckedChangeListener(this);
@@ -75,7 +90,8 @@ public class PasswordGeneratorActivity extends AppCompatActivity  implements Com
 
         passLengthSeekBar.setMin(5);
         passLengthSeekBar.setMax(120);
-        passLengthSeekBar.setProgress(16);
+        passLengthSeekBar.setProgress(pref.passwordLength);
+
         seekbarValue.setText(String.valueOf(passLengthSeekBar.getProgress()));
         passLengthSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -91,6 +107,8 @@ public class PasswordGeneratorActivity extends AppCompatActivity  implements Com
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 setRandomString();
+                pref.passwordLength = seekBar.getProgress();
+                settings.setGeneratorSettingsPrefernece(pref);
             }
         });
         setRandomString();
@@ -123,6 +141,11 @@ public class PasswordGeneratorActivity extends AppCompatActivity  implements Com
                 if (!switchSpecial.isChecked() && !switchNumber.isChecked() && !switchCapital.isChecked() && !switchSmall.isChecked()){
                     switchSmall.setChecked(true);
                 }
+                pref.small = switchSmall.isChecked();
+                pref.capital = switchCapital.isChecked();
+                pref.number = switchNumber.isChecked();
+                pref.special = switchSpecial.isChecked();
+                settings.setGeneratorSettingsPrefernece(pref);
         }
         setRandomString();
     }

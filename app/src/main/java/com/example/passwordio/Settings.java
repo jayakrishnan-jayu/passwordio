@@ -12,11 +12,33 @@ enum PasswordioTheme {
     DARK
 }
 
+class PasswordGeneratorSettingsPreference{
+    int passwordLength;
+    boolean small;
+    boolean capital;
+    boolean number;
+    boolean special;
+    
+    public PasswordGeneratorSettingsPreference(int passwordLength, boolean small, boolean capital, boolean number, boolean special) {
+        this.passwordLength = passwordLength;
+        this.small = small;
+        this.capital = capital;
+        this.number = number;
+        this.special = special;
+    }
+}
+
 public class Settings {
     private static Context context;
     private static final String PrefName = "passwordioPref";
     private static final String prefTheme = "theme";
     private static final String prefNewUser = "newUser";
+
+    private static final String prefGenPswdLength = "genPswdLength";
+    private static final String prefGenSmall = "genSmall";
+    private static final String prefGenCapital = "genCapital";
+    private static final String prefGenNumbers = "genNum";
+    private static final String prefGenSpecial = "genSpecial";
 
     private static SharedPreferences sharedPreference;
     private static SharedPreferences.Editor editor;
@@ -35,7 +57,26 @@ public class Settings {
         editor.putString(prefTheme, theme.name());
         editor.commit();
     }
+    
+    public PasswordGeneratorSettingsPreference getGeneratorSettingsPreference() {
+        return new PasswordGeneratorSettingsPreference(
+                sharedPreference.getInt(prefGenPswdLength, 8),
+                sharedPreference.getBoolean(prefGenSmall, true),
+                sharedPreference.getBoolean(prefGenCapital, false),
+                sharedPreference.getBoolean(prefGenNumbers, false),
+                sharedPreference.getBoolean(prefGenSpecial, false)
+        );
+    }
 
+    public void setGeneratorSettingsPrefernece(PasswordGeneratorSettingsPreference settings) {
+        editor.putInt(prefGenPswdLength, settings.passwordLength);
+        editor.putBoolean(prefGenSmall, settings.small);
+        editor.putBoolean(prefGenCapital, settings.capital);
+        editor.putBoolean(prefGenNumbers, settings.number);
+        editor.putBoolean(prefGenSpecial, settings.special);
+        editor.commit();
+    }
+    
     public boolean isNewUser() {
         return sharedPreference.getBoolean(prefNewUser, true);
     }
@@ -44,6 +85,8 @@ public class Settings {
         editor.putBoolean(prefNewUser, b);
         editor.commit();
     }
+    
+    
 
     public static void setCustomActionBar(ActionBar actionBar) {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
