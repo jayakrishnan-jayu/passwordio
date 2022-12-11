@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         Settings.setCustomActionBar(getSupportActionBar());
+        getSupportActionBar().getCustomView().setVisibility(View.GONE);
         Settings settings = new Settings(getApplicationContext());
 
         if (settings.isNewUser()) {

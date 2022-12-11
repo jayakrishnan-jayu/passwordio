@@ -45,7 +45,7 @@ public class VaultFragment extends Fragment {
             new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
     };
 
-    private static final Folder[] folderData = {
+    public static final Folder[] folderData = {
             new Folder("Apple", 7, R.drawable.ic_baseline_folder_open_30),
             new Folder("Crypto", 5,R.drawable.ic_baseline_folder_open_30),
             new Folder("Desktop", 2,R.drawable.ic_baseline_folder_open_30),
