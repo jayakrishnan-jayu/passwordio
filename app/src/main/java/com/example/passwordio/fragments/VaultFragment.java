@@ -1,7 +1,9 @@
 package com.example.passwordio.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordio.NoteItemsActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.adapters.FolderAdapter;
 import com.example.passwordio.adapters.LoginAdapter;
@@ -23,7 +26,7 @@ import com.example.passwordio.models.Login;
  * Use the {@link VaultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VaultFragment extends Fragment {
+public class VaultFragment extends Fragment implements  View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -106,11 +109,8 @@ public class VaultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         LoginAdapter loginAdapter = new LoginAdapter(loginData);
         FolderAdapter folderAdapter = new FolderAdapter(folderData);
-        FolderAdapter typeAdapter = new FolderAdapter(typeData);
 
-        RecyclerView typeRV = view.findViewById(R.id.vaultTypesRV);
-        typeRV.setLayoutManager(new LinearLayoutManager(getActivity()));
-        typeRV.setAdapter(typeAdapter);
+        view.findViewById(R.id.fragmentVaultNoteLayout).setOnClickListener(this);
 
 
         RecyclerView rv = view.findViewById(R.id.vaultNoFolderLoginRV);
@@ -124,8 +124,16 @@ public class VaultFragment extends Fragment {
         TextView typeCountTV = view.findViewById(R.id.vaultTypeCount);
         TextView folderCountTV = view.findViewById(R.id.vaultFolderCount);
         TextView noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
-        typeCountTV.setText(""+typeData.length);
+//        typeCountTV.setText(""+typeData.length);
         folderCountTV.setText(""+folderData.length);
         noFolderCountTV.setText(""+loginData.length);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fragmentVaultNoteLayout:
+                view.getContext().startActivity(new Intent(view.getContext(), NoteItemsActivity.class));
+        }
     }
 }
