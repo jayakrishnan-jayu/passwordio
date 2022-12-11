@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Passwordio"
         tools:targetApi="31">
         <activity
+            android:name=".NoteItemViewActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".NoteItemsActivity"
             android:exported="false">
             <meta-data

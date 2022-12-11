@@ -1,5 +1,6 @@
 package com.example.passwordio.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordio.LoginItemViewActivity;
+import com.example.passwordio.NoteItemViewActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.models.Folder;
 import com.example.passwordio.models.Note;
@@ -35,6 +38,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         holder.nameTextView.setText(note.name);
         holder.iconImageView.setImageResource(R.drawable.ic_baseline_note_24);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), NoteItemViewActivity.class);
+                intent.putExtra("note", note);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
