@@ -3,6 +3,7 @@ package com.example.passwordio.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,10 +23,12 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
     public class ViewHolder extends  RecyclerView.ViewHolder {
         private final TextView nameTextView;
         private final TextView countTextView;
+        private final ImageView iconImageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.folderItemNameTextView);
             countTextView = itemView.findViewById(R.id.folderItemCountTextView);
+            iconImageView = itemView.findViewById(R.id.folderItemIconImageView);
         }
     }
 
@@ -41,6 +44,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         Folder folder = folders[position];
         holder.countTextView.setText(String.valueOf(folder.count));
         holder.nameTextView.setText(folder.name);
+        holder.iconImageView.setImageResource(folder.icon);
     }
 
     @Override

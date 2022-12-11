@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,13 +46,18 @@ public class VaultFragment extends Fragment {
     };
 
     private static final Folder[] folderData = {
-            new Folder("Apple", 7),
-            new Folder("Crypto", 5),
-            new Folder("Desktop", 2),
-            new Folder("Github/Gitlab", 3),
-            new Folder("Google", 3),
-            new Folder("Network", 5),
-            new Folder("College", 7),
+            new Folder("Apple", 7, R.drawable.ic_baseline_folder_open_30),
+            new Folder("Crypto", 5,R.drawable.ic_baseline_folder_open_30),
+            new Folder("Desktop", 2,R.drawable.ic_baseline_folder_open_30),
+            new Folder("Github/Gitlab", 3,R.drawable.ic_baseline_folder_open_30),
+            new Folder("Google", 3,R.drawable.ic_baseline_folder_open_30),
+            new Folder("Network", 5,R.drawable.ic_baseline_folder_open_30),
+            new Folder("College", 7,R.drawable.ic_baseline_folder_open_30),
+    };
+
+    private static final Folder[] typeData = {
+            new Folder("Login", 7, R.drawable.ic_baseline_web_16),
+            new Folder("Secure Note", 5,R.drawable.ic_baseline_note_24),
     };
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -100,14 +106,12 @@ public class VaultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         LoginAdapter loginAdapter = new LoginAdapter(loginData);
         FolderAdapter folderAdapter = new FolderAdapter(folderData);
+        FolderAdapter typeAdapter = new FolderAdapter(typeData);
 
+        RecyclerView typeRV = view.findViewById(R.id.vaultTypesRV);
+        typeRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        typeRV.setAdapter(typeAdapter);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
 
         RecyclerView rv = view.findViewById(R.id.vaultNoFolderLoginRV);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -116,5 +120,12 @@ public class VaultFragment extends Fragment {
         RecyclerView folderRV = view.findViewById(R.id.vaultFolderRV);
         folderRV.setLayoutManager(new LinearLayoutManager(getActivity()));
         folderRV.setAdapter(folderAdapter);
+
+        TextView typeCountTV = view.findViewById(R.id.vaultTypeCount);
+        TextView folderCountTV = view.findViewById(R.id.vaultFolderCount);
+        TextView noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
+        typeCountTV.setText(""+typeData.length);
+        folderCountTV.setText(""+folderData.length);
+        noFolderCountTV.setText(""+loginData.length);
     }
 }
