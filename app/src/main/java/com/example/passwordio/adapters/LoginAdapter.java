@@ -1,5 +1,6 @@
 package com.example.passwordio.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordio.LoginItemViewActivity;
+import com.example.passwordio.MainActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.models.Login;
 
@@ -42,6 +45,15 @@ public class LoginAdapter extends RecyclerView.Adapter<LoginAdapter.ViewHolder> 
         Login login = logins[position];
         holder.urlTextView.setText(login.url);
         holder.usernameTextView.setText(login.username);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), LoginItemViewActivity.class);
+                intent.putExtra("login", login);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

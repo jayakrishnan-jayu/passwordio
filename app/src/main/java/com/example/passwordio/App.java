@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.passwordio.dialog.ActionBottomDialogInsertFragment;
@@ -21,7 +23,8 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
 
     BottomNavigationView bottomNavigationView;
     ImageView addButton;
-
+    TextView actionBarTitle;
+    View supportActionBar;
     VaultFragment vaultFragment = new VaultFragment();
     GeneratorFragment generatorFragment = new GeneratorFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
@@ -32,7 +35,9 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
         setContentView(R.layout.activity_app);
 
         Settings.setCustomActionBar(getSupportActionBar());
-        addButton = getSupportActionBar().getCustomView().findViewById(R.id.actionBarAdd);
+        supportActionBar = getSupportActionBar().getCustomView();
+        actionBarTitle = supportActionBar.findViewById(R.id.tvTitle);
+        addButton = supportActionBar.findViewById(R.id.actionBarAdd);
         addButton.setVisibility(View.VISIBLE);
 
         addButton.setOnClickListener(this);
@@ -50,14 +55,17 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
 
             case R.id.vault:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, vaultFragment).commit();
+                actionBarTitle.setText("My Vault");
                 return true;
 
             case R.id.generator:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, generatorFragment).commit();
+                actionBarTitle.setText("Generator");
                 return true;
 
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, settingsFragment).commit();
+                actionBarTitle.setText("Settings");
                 return true;
         }
         return false;

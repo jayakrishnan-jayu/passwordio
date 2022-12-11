@@ -1,6 +1,8 @@
 package com.example.passwordio.models;
 
-public class Login {
+import java.io.Serializable;
+
+public class Login  implements Serializable {
     public String username;
     public String password;
     public String url;
