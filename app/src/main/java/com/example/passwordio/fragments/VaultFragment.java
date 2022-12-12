@@ -19,8 +19,10 @@ import com.example.passwordio.NoteItemsActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.adapters.FolderAdapter;
 import com.example.passwordio.adapters.LoginAdapter;
+import com.example.passwordio.adapters.NoteAdapter;
 import com.example.passwordio.models.Folder;
 import com.example.passwordio.models.Login;
+import com.example.passwordio.models.Note;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +47,12 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
     DB db;
     Folder[] folders;
     Login[] loginsNoFolder;
+    Note[] notesNoFolder;
+    TextView typeCountTV, folderCountTV, noFolderCountTV;
+    RecyclerView rvLogin, rvNote, rvFolder;
+    LoginAdapter loginAdapter;
+    NoteAdapter noteAdapter;
+    FolderAdapter folderAdapter;
 
     public VaultFragment() {
         // Required empty public constructor
@@ -78,8 +86,8 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         db = new DB(getContext());
 //        db.generateTestData();
         folders = db.allFolders();
-        loginsNoFolder = db.allLogins();
         loginsNoFolder = db.loginsByFolder(-1);
+        notesNoFolder = db.notesByFolder(-1);
     }
 
     @Override
@@ -92,27 +100,33 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LoginAdapter loginAdapter = new LoginAdapter(loginsNoFolder);
-
-        FolderAdapter folderAdapter = new FolderAdapter(folders);
 
         view.findViewById(R.id.fragmentVaultNoteLayout).setOnClickListener(this);
         view.findViewById(R.id.fragmentVaultLoginLayout).setOnClickListener(this);
 
+        loginAdapter = new LoginAdapter(loginsNoFolder);
+        noteAdapter = new NoteAdapter(notesNoFolder);
+        folderAdapter = new FolderAdapter(folders);
 
-        RecyclerView rv = view.findViewById(R.id.vaultNoFolderLoginRV);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setAdapter(loginAdapter);
+        rvLogin = view.findViewById(R.id.vaultNoFolderLoginRV);
+        rvLogin.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvLogin.setAdapter(loginAdapter);
 
-        RecyclerView folderRV = view.findViewById(R.id.vaultFolderRV);
-        folderRV.setLayoutManager(new LinearLayoutManager(getActivity()));
-        folderRV.setAdapter(folderAdapter);
+        rvNote = view.findViewById(R.id.vaultNoFolderNoteRV);
+        rvNote.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvNote.setAdapter(noteAdapter);
 
-        TextView typeCountTV = view.findViewById(R.id.vaultTypeCount);
-        TextView folderCountTV = view.findViewById(R.id.vaultFolderCount);
-        TextView noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
+        rvFolder = view.findViewById(R.id.vaultFolderRV);
+        rvFolder.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvFolder.setAdapter(folderAdapter);
+
+        typeCountTV = view.findViewById(R.id.vaultTypeCount);
         typeCountTV.setText("2");
+
+        folderCountTV = view.findViewById(R.id.vaultFolderCount);
         folderCountTV.setText(""+folders.length);
+
+        noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
         noFolderCountTV.setText(""+loginsNoFolder.length);
     }
 

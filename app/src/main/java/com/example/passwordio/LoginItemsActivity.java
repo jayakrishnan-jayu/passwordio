@@ -12,9 +12,10 @@ import com.example.passwordio.models.Login;
 
 public class LoginItemsActivity extends AppCompatActivity {
 
-    RecyclerView rv;
+    RecyclerView rvLogin;
     TextView count;
     Login[] logins;
+    LoginAdapter loginAdapter;
     DB db;
 
     @Override
@@ -25,13 +26,13 @@ public class LoginItemsActivity extends AppCompatActivity {
         db = new DB(getApplicationContext());
         logins = db.allLogins();
 
-        LoginAdapter loginAdapter = new LoginAdapter(logins);
+        loginAdapter = new LoginAdapter(logins);
 
-        rv = findViewById(R.id.loginItemsRV);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        rvLogin = findViewById(R.id.loginItemsRV);
+        rvLogin.setLayoutManager(new LinearLayoutManager(this));
+        rvLogin.setAdapter(loginAdapter);
+
         count = findViewById(R.id.loginItemsCount);
-
-        rv.setAdapter(loginAdapter);
         count.setText(String.valueOf(logins.length));
 
     }

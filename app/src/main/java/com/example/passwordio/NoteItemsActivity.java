@@ -13,8 +13,10 @@ import com.example.passwordio.models.Note;
 
 public class NoteItemsActivity extends AppCompatActivity {
 
-    RecyclerView rv;
+    RecyclerView rvNote;
+    DB db;
     TextView count;
+    NoteAdapter noteAdapter;
 
     public Note[] notes;
 
@@ -23,18 +25,16 @@ public class NoteItemsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_items);
 
-        DB db = new DB(getApplicationContext());
+        db = new DB(getApplicationContext());
         notes = db.allNotes();
 
-        NoteAdapter noteAdapter = new NoteAdapter(notes);
+        noteAdapter = new NoteAdapter(notes);
 
-        rv = findViewById(R.id.noteItemsRV);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+        rvNote = findViewById(R.id.noteItemsRV);
+        rvNote.setLayoutManager(new LinearLayoutManager(this));
+        rvNote.setAdapter(noteAdapter);
+
         count = findViewById(R.id.noteItemsCount);
-
-        rv.setAdapter(noteAdapter);
         count.setText(String.valueOf(notes.length));
-
-
     }
 }

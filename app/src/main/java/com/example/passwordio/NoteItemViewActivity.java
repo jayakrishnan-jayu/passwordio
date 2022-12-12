@@ -21,12 +21,12 @@ public class NoteItemViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_item_view);
+
+        Note note = (Note) getIntent().getSerializableExtra("note");
+
         name = findViewById(R.id.noteItemViewName);
         noteTV = findViewById(R.id.noteItemViewNote);
         spinner = findViewById(R.id.noteItemViewSpinner);
-
-        Note note = (Note) getIntent().getSerializableExtra("note");
-        Toast.makeText(this, note.name, Toast.LENGTH_SHORT).show();
 
         noteTV.setEnabled(false);
         name.setEnabled(false);
