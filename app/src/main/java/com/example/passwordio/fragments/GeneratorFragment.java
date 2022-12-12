@@ -154,6 +154,7 @@ public class GeneratorFragment extends Fragment implements CompoundButton.OnChec
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 seekbarValue.setText(String.valueOf(i));
+                setRandomString();
             }
 
             @Override

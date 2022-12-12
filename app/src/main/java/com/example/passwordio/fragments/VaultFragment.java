@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passwordio.DB;
+import com.example.passwordio.LoginItemsActivity;
 import com.example.passwordio.NoteItemsActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.adapters.FolderAdapter;
@@ -32,31 +33,6 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-//    private static final Login[] loginData = {
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
-//    };
-
-//    public static final Folder[] folderData = {
-//            new Folder("Apple"),
-//            new Folder("Crypto"),
-//            new Folder("Desktop"),
-//            new Folder("Github/Gitlab"),
-//            new Folder("Google"),
-//            new Folder("Network"),
-//            new Folder("College"),
-//    };
 
     private static final Folder[] typeData = {
             new Folder(-1, "Login", 7),
@@ -102,7 +78,7 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         db = new DB(getContext());
 //        db.generateTestData();
         folders = db.allFolders();
-//        loginsNoFolder = db.allLogins();
+        loginsNoFolder = db.allLogins();
         loginsNoFolder = db.loginsByFolder(-1);
     }
 
@@ -121,6 +97,7 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         FolderAdapter folderAdapter = new FolderAdapter(folders);
 
         view.findViewById(R.id.fragmentVaultNoteLayout).setOnClickListener(this);
+        view.findViewById(R.id.fragmentVaultLoginLayout).setOnClickListener(this);
 
 
         RecyclerView rv = view.findViewById(R.id.vaultNoFolderLoginRV);
@@ -134,7 +111,7 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         TextView typeCountTV = view.findViewById(R.id.vaultTypeCount);
         TextView folderCountTV = view.findViewById(R.id.vaultFolderCount);
         TextView noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
-//        typeCountTV.setText(""+typeData.length);
+        typeCountTV.setText("2");
         folderCountTV.setText(""+folders.length);
         noFolderCountTV.setText(""+loginsNoFolder.length);
     }
@@ -144,6 +121,10 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         switch (view.getId()) {
             case R.id.fragmentVaultNoteLayout:
                 view.getContext().startActivity(new Intent(view.getContext(), NoteItemsActivity.class));
+                break;
+            case R.id.fragmentVaultLoginLayout:
+                view.getContext().startActivity(new Intent(view.getContext(), LoginItemsActivity.class));
+                break;
         }
     }
 }

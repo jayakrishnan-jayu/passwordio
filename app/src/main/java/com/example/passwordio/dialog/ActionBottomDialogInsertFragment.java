@@ -1,6 +1,7 @@
 package com.example.passwordio.dialog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment implements View.OnClickListener{
 
+    public static final String[] types = {"Login", "Secure Notes"};
+
     public static ActionBottomDialogInsertFragment newInstance() {
         return new ActionBottomDialogInsertFragment();
     }
@@ -31,14 +34,13 @@ public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        String[] types = {"Login", "Secure note"};
+        super.onViewCreated(view, savedInstanceState);;
         DB db = new DB(view.getContext());
         Folder[] folders = db.allFolders();
-        String[] folderNames = new String[folders.length+1];
-        folderNames[0] = "No Folder";
-        for (int i=0; i<folders.length-1; i++) {
-            folderNames[i+1] = folders[i].name;
+        String[] result = new String[folders.length+1];
+        result[0] = "No Folder";
+        for (int i=0; i< folders.length; i++) {
+            result[i+1] = folders[i].name;
         }
 
         LinearLayout noteLayout = view.findViewById(R.id.bottomSheetInsertLayoutNote);
@@ -53,7 +55,7 @@ public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment 
         noteLayout.setVisibility(View.VISIBLE);
 
         Spinner folderSpinner = view.findViewById(R.id.bottomSheetInsertFolderSpinner);
-        ArrayAdapter folderAdapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, folders);
+        ArrayAdapter folderAdapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, result);
         folderSpinner.setAdapter(folderAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -64,8 +66,7 @@ public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment 
                         noteLayout.setVisibility(View.GONE);
                         loginLayout.setVisibility(View.VISIBLE);
                         break;
-                    case "Secure note":
-
+                    case "Secure Note":
                         loginLayout.setVisibility(View.GONE);
                         noteLayout.setVisibility(View.VISIBLE);
                         break;
