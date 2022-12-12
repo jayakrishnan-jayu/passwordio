@@ -1,11 +1,17 @@
 package com.example.passwordio.models;
 
 public class Folder {
+    public long id;
     public String name;
-    public int count;
+    public long count;
 
-    public Folder(String name, int count, int icon) {
+    public Folder(long id, String name, long count) {
+        this.id = id;
         this.name = name;
         this.count = count;
+    }
+
+    public Folder(String name) {
+        this(0, name, 0);
     }
 }

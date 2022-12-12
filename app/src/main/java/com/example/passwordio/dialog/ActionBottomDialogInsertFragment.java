@@ -12,8 +12,8 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.passwordio.DB;
 import com.example.passwordio.R;
-import com.example.passwordio.fragments.VaultFragment;
 import com.example.passwordio.models.Folder;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -33,10 +33,12 @@ public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String[] types = {"Login", "Secure note"};
-        String[] folders = new String[VaultFragment.folderData.length+1];
-        folders[0] = "No Folder";
+        DB db = new DB(view.getContext());
+        Folder[] folders = db.allFolders();
+        String[] folderNames = new String[folders.length+1];
+        folderNames[0] = "No Folder";
         for (int i=0; i<folders.length-1; i++) {
-            folders[i+1] = VaultFragment.folderData[i].name;
+            folderNames[i+1] = folders[i].name;
         }
 
         LinearLayout noteLayout = view.findViewById(R.id.bottomSheetInsertLayoutNote);

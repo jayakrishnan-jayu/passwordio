@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.passwordio.LoginItemViewActivity;
-import com.example.passwordio.MainActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.models.Login;
 
@@ -43,7 +42,7 @@ public class LoginAdapter extends RecyclerView.Adapter<LoginAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Login login = logins[position];
-        holder.urlTextView.setText(login.url);
+        holder.urlTextView.setText(login.url.substring(8));
         holder.usernameTextView.setText(login.username);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -3,11 +3,11 @@ package com.example.passwordio.models;
 import java.io.Serializable;
 
 public class Note implements Serializable {
-    public int id;
+    public long id;
     public String name;
     public String note;
 
-    public Note(int id, String name, String note) {
+    public Note(long id, String name, String note) {
         this.id = id;
         this.name = name;
         this.note = note;

@@ -3,7 +3,6 @@ package com.example.passwordio.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordio.DB;
 import com.example.passwordio.NoteItemsActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.adapters.FolderAdapter;
@@ -33,38 +33,42 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final Login[] loginData = {
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-            new Login("jayakrishnan_jayu", "1234", "open.spotify.com"),
-    };
+//    private static final Login[] loginData = {
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//            new Login(-1, "jayakrishnan_jayu", "1234", "open.spotify.com"),
+//    };
 
-    public static final Folder[] folderData = {
-            new Folder("Apple", 7, R.drawable.ic_baseline_folder_open_30),
-            new Folder("Crypto", 5,R.drawable.ic_baseline_folder_open_30),
-            new Folder("Desktop", 2,R.drawable.ic_baseline_folder_open_30),
-            new Folder("Github/Gitlab", 3,R.drawable.ic_baseline_folder_open_30),
-            new Folder("Google", 3,R.drawable.ic_baseline_folder_open_30),
-            new Folder("Network", 5,R.drawable.ic_baseline_folder_open_30),
-            new Folder("College", 7,R.drawable.ic_baseline_folder_open_30),
-    };
+//    public static final Folder[] folderData = {
+//            new Folder("Apple"),
+//            new Folder("Crypto"),
+//            new Folder("Desktop"),
+//            new Folder("Github/Gitlab"),
+//            new Folder("Google"),
+//            new Folder("Network"),
+//            new Folder("College"),
+//    };
 
     private static final Folder[] typeData = {
-            new Folder("Login", 7, R.drawable.ic_baseline_web_16),
-            new Folder("Secure Note", 5,R.drawable.ic_baseline_note_24),
+            new Folder(-1, "Login", 7),
+            new Folder(-1, "Secure Note", 5),
     };
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    DB db;
+    Folder[] folders;
+    Login[] loginsNoFolder;
 
     public VaultFragment() {
         // Required empty public constructor
@@ -95,6 +99,11 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        db = new DB(getContext());
+//        db.generateTestData();
+        folders = db.allFolders();
+//        loginsNoFolder = db.allLogins();
+        loginsNoFolder = db.loginsByFolder(-1);
     }
 
     @Override
@@ -107,8 +116,9 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LoginAdapter loginAdapter = new LoginAdapter(loginData);
-        FolderAdapter folderAdapter = new FolderAdapter(folderData);
+        LoginAdapter loginAdapter = new LoginAdapter(loginsNoFolder);
+
+        FolderAdapter folderAdapter = new FolderAdapter(folders);
 
         view.findViewById(R.id.fragmentVaultNoteLayout).setOnClickListener(this);
 
@@ -125,8 +135,8 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         TextView folderCountTV = view.findViewById(R.id.vaultFolderCount);
         TextView noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
 //        typeCountTV.setText(""+typeData.length);
-        folderCountTV.setText(""+folderData.length);
-        noFolderCountTV.setText(""+loginData.length);
+        folderCountTV.setText(""+folders.length);
+        noFolderCountTV.setText(""+loginsNoFolder.length);
     }
 
     @Override
