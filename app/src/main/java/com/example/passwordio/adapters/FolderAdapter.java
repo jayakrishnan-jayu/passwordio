@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.passwordio.FolderItemsActivity;
 import com.example.passwordio.R;
 import com.example.passwordio.models.Folder;
 
@@ -43,11 +44,15 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         Folder folder = folders[position];
         holder.countTextView.setText(String.valueOf(folder.count));
         holder.nameTextView.setText(folder.name);
-//        Intent intent;
-//        switch (folder.icon) {
-//            case R.drawable.ic_baseline_folder_open_30:
-//                intent = new Intent()
-//        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), FolderItemsActivity.class);
+                intent.putExtra("folder_id", folder.id);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override

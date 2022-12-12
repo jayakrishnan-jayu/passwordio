@@ -15,22 +15,23 @@ public class LoginItemsActivity extends AppCompatActivity {
     RecyclerView rv;
     TextView count;
     Login[] logins;
+    DB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_items);
 
-        DB db = new DB(getApplicationContext());
+        db = new DB(getApplicationContext());
         logins = db.allLogins();
 
-        LoginAdapter noteAdapter = new LoginAdapter(logins);
+        LoginAdapter loginAdapter = new LoginAdapter(logins);
 
         rv = findViewById(R.id.loginItemsRV);
         rv.setLayoutManager(new LinearLayoutManager(this));
         count = findViewById(R.id.loginItemsCount);
 
-        rv.setAdapter(noteAdapter);
+        rv.setAdapter(loginAdapter);
         count.setText(String.valueOf(logins.length));
 
     }
