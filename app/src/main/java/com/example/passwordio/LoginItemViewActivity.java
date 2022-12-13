@@ -80,9 +80,13 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View view) {
                 if (!uri.isEnabled()) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse(uri.getText().toString()));
-                    startActivity(i);
+
+                    String url = login.url;
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "http://" + url;
+                    }
+                    Uri uri = Uri.parse(url);
+                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 }
             }
         });
@@ -144,7 +148,11 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
                     login.password = text;
                     break;
                 case R.id.loginItemViewURI:
-                    login.url = "https://"+text;
+                    String url = text;
+                    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                        url = "https://" + url;
+                    }
+                    login.url = url;
                     break;
             }
         }

@@ -24,30 +24,45 @@ public class FolderItemsActivity extends AppCompatActivity {
     Note[] notes;
     DB db;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_folder_items);
+    long folder_id;
 
-        long folder_id = getIntent().getLongExtra("folder_id", -1);
-
-        db = new DB(getApplicationContext());
+    private void update() {
         logins = db.loginsByFolder(folder_id);
         notes = db.notesByFolder(folder_id);
 
         loginAdapter = new LoginAdapter(logins);
         noteAdapter = new NoteAdapter(notes);
 
-        rvLogins = findViewById(R.id.folderItemsLoginRV);
         rvLogins.setLayoutManager(new LinearLayoutManager(this));
         rvLogins.setAdapter(loginAdapter);
 
-
-        rvNotes = findViewById(R.id.folderItemsNoteRV);
         rvNotes.setLayoutManager(new LinearLayoutManager(this));
         rvNotes.setAdapter(noteAdapter);
 
-        count = findViewById(R.id.folderItemsCount);
         count.setText(String.valueOf(logins.length + notes.length));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_folder_items);
+
+        folder_id = getIntent().getLongExtra("folder_id", -1);
+
+        db = new DB(getApplicationContext());
+
+        rvLogins = findViewById(R.id.folderItemsLoginRV);
+        rvNotes = findViewById(R.id.folderItemsNoteRV);
+        count = findViewById(R.id.folderItemsCount);
+
+
+
+        update();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        update();
     }
 }

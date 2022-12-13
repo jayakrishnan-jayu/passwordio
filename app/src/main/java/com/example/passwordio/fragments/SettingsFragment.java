@@ -92,6 +92,7 @@ public class SettingsFragment extends Fragment implements  View.OnClickListener 
             case R.id.settingsDeleteDataButton:
                 db.deleteAllData();
                 Toast.makeText(view.getContext(), "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.fragmentSettingsFolderLayout:
                 startActivity(new Intent(this.getContext(), FolderListActivity.class));
                 break;
