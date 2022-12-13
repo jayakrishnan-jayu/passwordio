@@ -2,12 +2,16 @@ package com.example.passwordio.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.passwordio.DB;
 import com.example.passwordio.R;
 
 /**
@@ -15,7 +19,7 @@ import com.example.passwordio.R;
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements  View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +66,27 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.settingsGenerateDataButton).setOnClickListener(this);
+        view.findViewById(R.id.settingsDeleteDataButton).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        DB db = new DB(view.getContext());
+        switch (view.getId()) {
+            case R.id.settingsGenerateDataButton:
+
+                db.generateTestData();
+                Toast.makeText(view.getContext(), "Dummy Data Generated", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.settingsDeleteDataButton:
+                db.deleteAllData();
+                Toast.makeText(view.getContext(), "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
+        }
     }
 }

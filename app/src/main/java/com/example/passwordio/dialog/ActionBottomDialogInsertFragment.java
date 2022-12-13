@@ -66,7 +66,7 @@ public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment 
                         noteLayout.setVisibility(View.GONE);
                         loginLayout.setVisibility(View.VISIBLE);
                         break;
-                    case "Secure Note":
+                    case "Secure Notes":
                         loginLayout.setVisibility(View.GONE);
                         noteLayout.setVisibility(View.VISIBLE);
                         break;

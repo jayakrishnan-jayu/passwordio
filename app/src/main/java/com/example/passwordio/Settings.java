@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 
 import androidx.appcompat.app.ActionBar;
 
+import com.example.passwordio.models.PasswordGeneratorSettingsPreference;
+
 enum PasswordioTheme {
     LIGHT,
     DARK

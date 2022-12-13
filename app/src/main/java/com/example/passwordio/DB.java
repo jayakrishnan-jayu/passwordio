@@ -50,6 +50,7 @@ public class DB extends SQLiteOpenHelper {
             + COL_LOGIN_URL + " text not null,"
             + COL_LOGIN_FOLDER_ID + " integer,"
             + " FOREIGN KEY ("+COL_LOGIN_FOLDER_ID+") REFERENCES "+TABLE_FOLDER_NAME+"("+COL_ID+")"
+            + " ON DELETE SET NULL "
             + ");";
 
     private static final String TASK_TABLE_NOTE_CREATE = "create table "
@@ -59,6 +60,7 @@ public class DB extends SQLiteOpenHelper {
             + COL_NOTE_TEXT + " text not null,"
             + COL_NOTE_FOLDER_ID + " integer,"
             + " FOREIGN KEY ("+COL_NOTE_FOLDER_ID+") REFERENCES "+TABLE_FOLDER_NAME+"("+COL_ID+")"
+            + " ON DELETE SET NULL "
             + ");";
 
     public DB(Context context) {
@@ -101,6 +103,20 @@ public class DB extends SQLiteOpenHelper {
         long id =  db.insert(TABLE_FOLDER_NAME, null, contentValues);
         db.close();
         return id;
+    }
+
+    public void updateFolder(Folder folder) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_FOLDER_NAME, folder.name);
+        db.update(TABLE_FOLDER_NAME, contentValues, COL_ID+"=?", new String[]{String.valueOf(folder.id)});
+        db.close();
+    }
+
+    public void deleteFolder(long folder_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FOLDER_NAME, COL_ID+"=?", new String[]{String.valueOf(folder_id)});
+        db.close();
     }
 
     public Login[] allLogins(){
@@ -151,22 +167,20 @@ public class DB extends SQLiteOpenHelper {
         return id;
     }
 
-
-    public long createNote(String name, String note){
-        return createNote(name, note,-1);
-    }
-
-    public long createNote(String name, String note, long folder_id){
+    public void updateLogin(Login login) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_NOTE_NAME, name);
-        contentValues.put(COL_NOTE_TEXT, note);
-        if (folder_id > 0) {
-            contentValues.put(COL_NOTE_FOLDER_ID, folder_id);
-        }
-        long id = db.insert(TABLE_NOTE_NAME, null, contentValues);
+        contentValues.put(COL_LOGIN_USERNAME, login.username);
+        contentValues.put(COL_LOGIN_PASSWORD, login.password);
+        contentValues.put(COL_LOGIN_URL, login.url);
+        db.update(TABLE_LOGIN_NAME, contentValues, COL_ID+"=?", new String[]{String.valueOf(login.id)});
         db.close();
-        return id;
+    }
+
+    public void deleteLogin(long login_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_LOGIN_NAME, COL_ID+"=?", new String[]{String.valueOf(login_id)});
+        db.close();
     }
 
     public Note[] allNotes(){
@@ -199,6 +213,38 @@ public class DB extends SQLiteOpenHelper {
         return result;
     }
 
+    public long createNote(String name, String note){
+        return createNote(name, note,-1);
+    }
+
+    public long createNote(String name, String note, long folder_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_NOTE_NAME, name);
+        contentValues.put(COL_NOTE_TEXT, note);
+        if (folder_id > 0) {
+            contentValues.put(COL_NOTE_FOLDER_ID, folder_id);
+        }
+        long id = db.insert(TABLE_NOTE_NAME, null, contentValues);
+        db.close();
+        return id;
+    }
+
+    public void updateNote(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_NOTE_NAME, note.name);
+        contentValues.put(COL_NOTE_TEXT, note.note);
+        db.update(TABLE_NOTE_NAME, contentValues, COL_ID+"=?", new String[]{String.valueOf(note.id)});
+        db.close();
+    }
+
+    public void deleteNote(long note_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTE_NAME, COL_ID+"=?", new String[]{String.valueOf(note_id)});
+        db.close();
+    }
+
 
     private long folderCount(SQLiteDatabase db, long id) {
         String sql = "SELECT (SELECT COUNT(*) FROM "+TABLE_LOGIN_NAME+" WHERE "+COL_LOGIN_FOLDER_ID+" = "+id+") + (SELECT COUNT(*) FROM "+TABLE_NOTE_NAME+" WHERE "+COL_NOTE_FOLDER_ID+" = "+id+") as count";
@@ -209,10 +255,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void generateTestData() {
-
-
         Map<String, Long> folder_id = new HashMap<>();
-        Map<String, Long> login_id = new HashMap<>();
         String[] folder_names = {"Apple", "Crypto", "Desktop", "Github", "Gitlab", "Google", "Network", "Passport"};
         String[] url_links = {"apple.com", "devfolio.co", "google.com", "discord.com", "twitter.com", "linkedin.com", "amazon.in", "accounts.spotify.com"};
         String[] note_names = {"Router Config", "SSH Recovery", "Wallet", "Github", "Gitlab"};
@@ -251,19 +294,18 @@ public class DB extends SQLiteOpenHelper {
 
     }
 
-//    public Login[] allLogins() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor res = db.rawQuery("select * from "+TABLE_LOGIN_NAME,null);
-//        return res;
-//    }
-
-//    private static final String TASK_TABLE_CREATE = "create table "
-//            + TASK_TABLE + " ("
-//            + TASK_ID + " integer primary key autoincrement, "
-//            + TASK_TITLE + " text not null, "
-//            + TASK_NOTES + " text not null, "
-//            + TASK_DATE_TIME + " text not null,"
-//            + TASK_CAT + " integer,"
-//            + " FOREIGN KEY ("+TASK_CAT+") REFERENCES "+CAT_TABLE+"("+CAT_ID+"));";
-
+    public void deleteAllData() {
+        Note[] notes = allNotes();
+        Login[] logins = allLogins();
+        Folder[] folders = allFolders();
+        for (Folder folder : folders) {
+            deleteFolder(folder.id);
+        }
+        for (Login login : logins) {
+            deleteLogin(login.id);
+        }
+        for (Note note : notes) {
+            deleteNote(note.id);
+        }
+    }
 }

@@ -3,12 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".fragments.SettingsFragment">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Settings Fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Developer"
+        android:textColor="@color/blue"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing"
+        android:layout_marginBottom="16dp"
+        />
+
+    <Button
+        android:id="@+id/settingsGenerateDataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/buttonSecondary"
+        android:text="Generate Test Data"
+        android:layout_marginBottom="16dp"
+        />
+        <Button
+            android:id="@+id/settingsDeleteDataButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:text="Delete All Data"
+            android:layout_marginBottom="16dp"
+            />
+    </LinearLayout>
 
 </FrameLayout>

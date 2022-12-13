@@ -9,8 +9,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +20,9 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.passwordio.PasswordGeneratorSettingsPreference;
+import com.example.passwordio.models.PasswordGeneratorSettingsPreference;
 import com.example.passwordio.R;
 import com.example.passwordio.Settings;
-import com.example.passwordio.adapters.LoginAdapter;
-import com.example.passwordio.models.Login;
 
 import java.util.Random;
 

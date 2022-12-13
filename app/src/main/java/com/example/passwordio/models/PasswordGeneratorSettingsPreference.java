@@ -1,4 +1,4 @@
-package com.example.passwordio;
+package com.example.passwordio.models;
 
 public class PasswordGeneratorSettingsPreference {
     public int passwordLength;
