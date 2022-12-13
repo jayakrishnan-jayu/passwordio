@@ -97,6 +97,32 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         return inflater.inflate(R.layout.fragment_vault, container, false);
     }
 
+    private void update() {
+        folders = db.allFolders();
+        loginsNoFolder = db.loginsByFolder(-1);
+        notesNoFolder = db.notesByFolder(-1);
+
+        loginAdapter = new LoginAdapter(loginsNoFolder);
+        noteAdapter = new NoteAdapter(notesNoFolder);
+        folderAdapter = new FolderAdapter(folders);
+
+        rvLogin.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvLogin.setAdapter(loginAdapter);
+
+        rvNote.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvNote.setAdapter(noteAdapter);
+
+        rvFolder.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvFolder.setAdapter(folderAdapter);
+
+
+
+        folderCountTV.setText(""+folders.length);
+
+
+        noFolderCountTV.setText(""+loginsNoFolder.length);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -104,30 +130,21 @@ public class VaultFragment extends Fragment implements  View.OnClickListener{
         view.findViewById(R.id.fragmentVaultNoteLayout).setOnClickListener(this);
         view.findViewById(R.id.fragmentVaultLoginLayout).setOnClickListener(this);
 
-        loginAdapter = new LoginAdapter(loginsNoFolder);
-        noteAdapter = new NoteAdapter(notesNoFolder);
-        folderAdapter = new FolderAdapter(folders);
-
         rvLogin = view.findViewById(R.id.vaultNoFolderLoginRV);
-        rvLogin.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvLogin.setAdapter(loginAdapter);
-
         rvNote = view.findViewById(R.id.vaultNoFolderNoteRV);
-        rvNote.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvNote.setAdapter(noteAdapter);
-
         rvFolder = view.findViewById(R.id.vaultFolderRV);
-        rvFolder.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvFolder.setAdapter(folderAdapter);
-
         typeCountTV = view.findViewById(R.id.vaultTypeCount);
-        typeCountTV.setText("2");
-
         folderCountTV = view.findViewById(R.id.vaultFolderCount);
-        folderCountTV.setText(""+folders.length);
-
         noFolderCountTV = view.findViewById(R.id.vaultNoFolderCount);
-        noFolderCountTV.setText(""+loginsNoFolder.length);
+
+        typeCountTV.setText("2");
+        update();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        update();
     }
 
     @Override

@@ -149,6 +149,16 @@ public class DB extends SQLiteOpenHelper {
         return result;
     }
 
+    public Login loginsByID(long loginID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "select * from "+TABLE_LOGIN_NAME+" WHERE "+COL_ID+" = "+loginID;
+        Cursor res = db.rawQuery(sql,null);
+        if (res.moveToNext()) {
+            return new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3));
+        }
+        return new Login(-1, "", "", "");
+    }
+
     public long createLogin(String username, String password, String url){
         return createLogin(username, password, url, -1);
     }
