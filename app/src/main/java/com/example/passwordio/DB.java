@@ -223,6 +223,17 @@ public class DB extends SQLiteOpenHelper {
         return result;
     }
 
+    public Note noteByID(long noteID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "select * from "+TABLE_NOTE_NAME+" WHERE "+COL_ID+" = "+noteID;
+        Cursor res = db.rawQuery(sql,null);
+        if (res.moveToNext()) {
+            return new Note(res.getLong(0), res.getString(1), res.getString(2));
+        }
+        return new Note(-1, "", "");
+    }
+
+
     public long createNote(String name, String note){
         return createNote(name, note,-1);
     }

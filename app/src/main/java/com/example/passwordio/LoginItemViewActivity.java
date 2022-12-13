@@ -41,6 +41,7 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -146,33 +147,6 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
                     login.url = "https://"+text;
                     break;
             }
-            Log.v("LoginItemViewActivity", "\n"+login.username+"\n"+login.url);
         }
     }
 }
-
-//class GenericTextWatcher implements TextWatcher{
-//
-//    private View view;
-//    GenericTextWatcher(View view) {
-//        this.view = view;
-//    }
-//
-//    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//
-//    public void afterTextChanged(Editable editable) {
-//        String text = editable.toString();
-//        switch(view.getId()){
-//            case R.id.loginItemViewUsername:
-//                model.setName(text);
-//                break;
-//            case R.id.loginItemViewPassowrd:
-//                model.setEmail(text);
-//                break;
-//            case R.id.loginItemViewURI:
-//                model.setPhone(text);
-//                break;
-//        }
-//    }
-//}
