@@ -19,7 +19,7 @@ public class FolderItemViewActivity extends AppCompatActivity implements View.On
     TextInputEditText name;
     Folder folder;
     ImageView addButton;
-    TextView actionBarTitle, actionBarSave, actionBarDelete;
+    TextView actionBarTitle, actionBarSave, actionBarDelete, actionBarCancel;
     View supportActionBar;
     DB db;
     boolean newFolder;
@@ -36,6 +36,7 @@ public class FolderItemViewActivity extends AppCompatActivity implements View.On
         actionBarTitle = supportActionBar.findViewById(R.id.tvTitle);
         actionBarSave = supportActionBar.findViewById(R.id.actionBarSave);
         actionBarDelete = supportActionBar.findViewById(R.id.actionBarDelete);
+        actionBarCancel = supportActionBar.findViewById(R.id.actionBarCancel);
 
         addButton = supportActionBar.findViewById(R.id.actionBarAdd);
         addButton.setVisibility(View.GONE);
@@ -50,6 +51,8 @@ public class FolderItemViewActivity extends AppCompatActivity implements View.On
             folder = (Folder) getIntent().getSerializableExtra("folder");
         } else {
             actionBarTitle.setText("Create Folder");
+            actionBarCancel.setVisibility(View.VISIBLE);
+            actionBarCancel.setOnClickListener(this);
             folder = new Folder("");
         }
 
@@ -104,6 +107,9 @@ public class FolderItemViewActivity extends AppCompatActivity implements View.On
             case R.id.actionBarDelete:
                 db.deleteFolder(folder);
                 Toast.makeText(getApplicationContext(), "Folder Deleted", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.actionBarCancel:
+                finish();
                 break;
         }
 

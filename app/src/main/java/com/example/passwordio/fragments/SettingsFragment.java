@@ -77,6 +77,7 @@ public class SettingsFragment extends Fragment implements  View.OnClickListener 
         view.findViewById(R.id.settingsGenerateDataButton).setOnClickListener(this);
         view.findViewById(R.id.settingsDeleteDataButton).setOnClickListener(this);
         view.findViewById(R.id.fragmentSettingsFolderLayout).setOnClickListener(this);
+
     }
 
     @Override

@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class App extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, View.OnClickListener{
 
     BottomNavigationView bottomNavigationView;
-    ImageView addButton;
+    ImageView addButton, searchButton, historyButton;
     TextView actionBarTitle, actionBarSave;
     View supportActionBar;
     VaultFragment vaultFragment = new VaultFragment();
@@ -38,9 +38,10 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
         supportActionBar = getSupportActionBar().getCustomView();
         actionBarTitle = supportActionBar.findViewById(R.id.tvTitle);
         actionBarSave = supportActionBar.findViewById(R.id.actionBarSave);
+
         addButton = supportActionBar.findViewById(R.id.actionBarAdd);
-        addButton.setVisibility(View.VISIBLE);
-        actionBarSave.setVisibility(View.GONE);
+        searchButton = supportActionBar.findViewById(R.id.actionBarSearch);
+        historyButton = supportActionBar.findViewById(R.id.actionBarHistory);
 
         addButton.setOnClickListener(this);
 
@@ -57,16 +58,28 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
             case R.id.vault:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, vaultFragment).commit();
                 actionBarTitle.setText("My Vault");
+                actionBarSave.setVisibility(View.GONE);
+                addButton.setVisibility(View.VISIBLE);
+                searchButton.setVisibility(View.VISIBLE);
+                historyButton.setVisibility(View.GONE);
                 return true;
 
             case R.id.generator:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, generatorFragment).commit();
                 actionBarTitle.setText("Generator");
+                actionBarSave.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
+                searchButton.setVisibility(View.GONE);
+                historyButton.setVisibility(View.VISIBLE);
                 return true;
 
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, settingsFragment).commit();
                 actionBarTitle.setText("Settings");
+                actionBarSave.setVisibility(View.GONE);
+                addButton.setVisibility(View.GONE);
+                searchButton.setVisibility(View.GONE);
+                historyButton.setVisibility(View.GONE);
                 return true;
         }
         return false;

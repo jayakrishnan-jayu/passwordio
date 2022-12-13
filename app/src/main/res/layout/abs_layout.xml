@@ -15,6 +15,15 @@
         android:textSize="18sp"
         android:visibility="gone"
         />
+    <TextView
+        android:id="@+id/actionBarCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_alignParentLeft="true"
+        android:textSize="18sp"
+        android:visibility="gone"
+        />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
@@ -31,8 +40,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
+        android:textColor="@color/blue"
         android:layout_alignParentRight="true"
         android:textSize="18sp"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/actionBarSearch"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_baseline_search_24"
+        android:layout_toLeftOf="@id/actionBarAdd"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/actionBarHistory"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_baseline_history_24"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         android:visibility="gone"
         />
 
@@ -41,6 +72,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:src="@drawable/ic_baseline_add_24"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:visibility="gone"
         />
