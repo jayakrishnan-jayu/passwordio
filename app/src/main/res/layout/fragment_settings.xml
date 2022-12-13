@@ -9,20 +9,49 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage"
+            android:layout_marginBottom="16dp"
+            />
+        <RelativeLayout android:id="@+id/fragmentSettingsFolderLayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:background="@color/dark_grey"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_baseline_note_24"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="8dp"
+                    android:text="Folders"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="Developer"
-        android:textColor="@color/blue"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Testing"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         />
 
     <Button
@@ -33,15 +62,15 @@
         android:text="Generate Test Data"
         android:layout_marginBottom="16dp"
         />
-        <Button
-            android:id="@+id/settingsDeleteDataButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/red"
-            android:textColor="@color/white"
-            android:text="Delete All Data"
-            android:layout_marginBottom="16dp"
-            />
+    <Button
+        android:id="@+id/settingsDeleteDataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/white"
+        android:text="Delete All Data"
+        android:layout_marginBottom="16dp"
+        />
     </LinearLayout>
 
 </FrameLayout>

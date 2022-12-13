@@ -1,6 +1,8 @@
 package com.example.passwordio.models;
 
-public class Folder {
+import java.io.Serializable;
+
+public class Folder implements Serializable {
     public long id;
     public String name;
     public long count;

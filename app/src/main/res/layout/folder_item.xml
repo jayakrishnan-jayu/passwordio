@@ -23,7 +23,6 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginLeft="8dp"
-            android:text="Apple"
             />
 
     </LinearLayout>

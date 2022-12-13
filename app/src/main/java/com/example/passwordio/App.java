@@ -23,7 +23,7 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
 
     BottomNavigationView bottomNavigationView;
     ImageView addButton;
-    TextView actionBarTitle;
+    TextView actionBarTitle, actionBarSave;
     View supportActionBar;
     VaultFragment vaultFragment = new VaultFragment();
     GeneratorFragment generatorFragment = new GeneratorFragment();
@@ -37,8 +37,10 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
         Settings.setCustomActionBar(getSupportActionBar());
         supportActionBar = getSupportActionBar().getCustomView();
         actionBarTitle = supportActionBar.findViewById(R.id.tvTitle);
+        actionBarSave = supportActionBar.findViewById(R.id.actionBarSave);
         addButton = supportActionBar.findViewById(R.id.actionBarAdd);
         addButton.setVisibility(View.VISIBLE);
+        actionBarSave.setVisibility(View.GONE);
 
         addButton.setOnClickListener(this);
 
@@ -50,7 +52,6 @@ public class App extends AppCompatActivity implements NavigationBarView.OnItemSe
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.v(this.getClass().getName().toString(), "item "+item.getItemId()+" "+(item.getItemId()==R.id.vault));
         switch (item.getItemId()) {
 
             case R.id.vault:

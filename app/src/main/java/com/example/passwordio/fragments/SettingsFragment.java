@@ -1,5 +1,6 @@
 package com.example.passwordio.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.passwordio.DB;
+import com.example.passwordio.FolderItemViewActivity;
+import com.example.passwordio.FolderListActivity;
 import com.example.passwordio.R;
 
 /**
@@ -73,6 +76,7 @@ public class SettingsFragment extends Fragment implements  View.OnClickListener 
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.settingsGenerateDataButton).setOnClickListener(this);
         view.findViewById(R.id.settingsDeleteDataButton).setOnClickListener(this);
+        view.findViewById(R.id.fragmentSettingsFolderLayout).setOnClickListener(this);
     }
 
     @Override
@@ -87,6 +91,9 @@ public class SettingsFragment extends Fragment implements  View.OnClickListener 
             case R.id.settingsDeleteDataButton:
                 db.deleteAllData();
                 Toast.makeText(view.getContext(), "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
+            case R.id.fragmentSettingsFolderLayout:
+                startActivity(new Intent(this.getContext(), FolderListActivity.class));
+                break;
         }
     }
 }

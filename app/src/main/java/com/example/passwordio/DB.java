@@ -113,9 +113,9 @@ public class DB extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteFolder(long folder_id){
+    public void deleteFolder(Folder folder){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_FOLDER_NAME, COL_ID+"=?", new String[]{String.valueOf(folder_id)});
+        db.delete(TABLE_FOLDER_NAME, COL_ID+"=?", new String[]{String.valueOf(folder.id)});
         db.close();
     }
 
@@ -299,7 +299,7 @@ public class DB extends SQLiteOpenHelper {
         Login[] logins = allLogins();
         Folder[] folders = allFolders();
         for (Folder folder : folders) {
-            deleteFolder(folder.id);
+            deleteFolder(folder);
         }
         for (Login login : logins) {
             deleteLogin(login.id);
