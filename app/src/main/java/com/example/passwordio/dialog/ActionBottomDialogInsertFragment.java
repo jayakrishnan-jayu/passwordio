@@ -3,12 +3,16 @@ package com.example.passwordio.dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,11 +21,15 @@ import com.example.passwordio.DB;
 import com.example.passwordio.R;
 import com.example.passwordio.models.Folder;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment implements View.OnClickListener{
 
     public static final String[] types = {"Login", "Secure Notes"};
-
+    private TextInputEditText folder, type, username, password, uri, noteName, noteText;
+    LinearLayout noteLayout, loginLayout;
+    private Folder[] folders;
+    private DB db;
     public static ActionBottomDialogInsertFragment newInstance() {
         return new ActionBottomDialogInsertFragment();
     }
@@ -35,57 +43,147 @@ public class ActionBottomDialogInsertFragment extends BottomSheetDialogFragment 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);;
-        DB db = new DB(view.getContext());
-        Folder[] folders = db.allFolders();
-        String[] result = new String[folders.length+1];
-        result[0] = "No Folder";
-        for (int i=0; i< folders.length; i++) {
-            result[i+1] = folders[i].name;
-        }
+        db = new DB(view.getContext());
+        folders = db.allFolders();
 
-        LinearLayout noteLayout = view.findViewById(R.id.bottomSheetInsertLayoutNote);
-        LinearLayout loginLayout = view.findViewById(R.id.bottomSheetInsertLayoutLogin);
+        folder = view.findViewById(R.id.bottomSheetInsertFolderText);
+        type = view.findViewById(R.id.bottomSheetInsertTypeText);
+
+        username = view.findViewById(R.id.bottomSheetInsertUsername);
+        password = view.findViewById(R.id.bottomSheetInsertPassword);
+        uri = view.findViewById(R.id.bottomSheetInsertURI);
+
+        noteName = view.findViewById(R.id.bottomSheetInsertNoteName);
+        noteText = view.findViewById(R.id.bottomSheetInsertNoteText);
+
+        noteLayout = view.findViewById(R.id.bottomSheetInsertLayoutNote);
+        loginLayout = view.findViewById(R.id.bottomSheetInsertLayoutLogin);
 
         view.findViewById(R.id.bottomSheetInsertCancel).setOnClickListener(this);
+        view.findViewById(R.id.bottomSheetInsertSave).setOnClickListener(this);
 
-        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, types);
-        Spinner spinner = view.findViewById(R.id.bottomSheetInsertTypeSpinner);
-        spinner.setAdapter(adapter);
+
         loginLayout.setVisibility(View.GONE);
         noteLayout.setVisibility(View.VISIBLE);
 
-        Spinner folderSpinner = view.findViewById(R.id.bottomSheetInsertFolderSpinner);
-        ArrayAdapter folderAdapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_spinner_item, result);
-        folderSpinner.setAdapter(folderAdapter);
+        folder.setOnClickListener(this);
+        type.setOnClickListener(this);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (types[i]) {
-                    case "Login":
-                        noteLayout.setVisibility(View.GONE);
-                        loginLayout.setVisibility(View.VISIBLE);
-                        break;
-                    case "Secure Notes":
-                        loginLayout.setVisibility(View.GONE);
-                        noteLayout.setVisibility(View.VISIBLE);
-                        break;
-                }
+        type.setText(types[0]);
+        changeUIOnType(types[0]);
+
+        folder.setText("No Folder");
+
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                switch (types[i]) {
+//                    case "Login":
+//                        noteLayout.setVisibility(View.GONE);
+//                        loginLayout.setVisibility(View.VISIBLE);
+//                        break;
+//                    case "Secure Notes":
+//                        loginLayout.setVisibility(View.GONE);
+//                        noteLayout.setVisibility(View.VISIBLE);
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//            }
+//        });
+
+    }
+
+    private void handleSave() {
+        Log.v("ActionBottomDialogInsertFragment", "handleSave()");
+        Log.v("ActionBottomDialogInsertFragment", type.getText().toString());
+        String dir = folder.getText().toString();
+        long folder_id = -1;
+        for (Folder f: folders) {
+            if (f.name.equals(dir)){
+                folder_id = f.id;
+                break;
             }
+        }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+        if (type.getText().toString().equals("Login")) {
+            String uname = username.getText().toString();
+            String pswd = password.getText().toString();
+            String link = uri.getText().toString();
+
+            Log.v("ActionBottomDialogInsertFragment", uname + " " + password + " " + dir + " " + folder_id);
+            if (!link.startsWith("http://") && !link.startsWith("https://")) {
+                link = "https://" + link;
             }
-        });
+            db.createLogin(uname, pswd, link, folder_id);
+            Toast.makeText(getContext(), "Item Saved", Toast.LENGTH_SHORT);
+            dismiss();
+            return;
+        }
+        String noteTitle = noteName.getText().toString();
+        String noteContent = noteText.getText().toString();
+        db.createNote(noteTitle, noteContent, folder_id);
+        Toast.makeText(getContext(), "Item Saved", Toast.LENGTH_SHORT);
+        dismiss();
+        return;
+    }
 
+    private void changeUIOnType(String type) {
+        switch (type) {
+            case "Login":
+                noteLayout.setVisibility(View.GONE);
+                loginLayout.setVisibility(View.VISIBLE);
+                break;
+            case "Secure Notes":
+                loginLayout.setVisibility(View.GONE);
+                noteLayout.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     @Override
     public void onClick(View view) {
+        PopupMenu menu;
         switch (view.getId()) {
             case R.id.bottomSheetInsertCancel:
                 dismiss();
                 return;
+            case R.id.bottomSheetInsertSave:
+                handleSave();
+                break;
+            case R.id.bottomSheetInsertFolderText:
+                menu = new PopupMenu(view.getContext(), view);
+                menu.getMenu().add("No Folder");
+                for (Folder folder: folders) {
+                    menu.getMenu().add(folder.name);
+                }
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        folder.setText(menuItem.getTitle());
+                        return false;
+                    }
+                });
+                menu.show();
+                break;
+            case R.id.bottomSheetInsertTypeText:
+                menu = new PopupMenu(view.getContext(), view);
+                for (String type: types) {
+                    menu.getMenu().add(type);
+                }
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        type.setText(menuItem.getTitle());
+                        changeUIOnType(menuItem.getTitle().toString());
+                        return false;
+                    }
+                });
+                menu.show();
+                break;
         }
     }
+
 }

@@ -28,6 +28,7 @@
             android:text="Add Item"
             />
         <TextView
+            android:id="@+id/bottomSheetInsertSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -51,13 +52,20 @@
         android:layout_marginBottom="16dp"
         />
 
-    <Spinner
-        android:id="@+id/bottomSheetInsertTypeSpinner"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
-        android:layout_marginBottom="16dp"
-        />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetInsertTypeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:focusable="false"
+            android:layout_marginBottom="16dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:id="@+id/bottomSheetInsertLayoutLogin"
@@ -69,8 +77,10 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetInsertUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
@@ -82,10 +92,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/blue"
         >
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetInsertPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -106,8 +118,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetInsertURI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="URI"
@@ -126,12 +140,14 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bottomSheetInsertNoteName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Name"
-                android:inputType="textWebEditText"
+                android:inputType="text"
                 android:layout_marginBottom="12dp"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -141,12 +157,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bottomSheetInsertNoteText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Note"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:layout_marginBottom="12dp"
                 />
         </com.google.android.material.textfield.TextInputLayout>
@@ -163,16 +181,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Folder"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         />
 
-    <Spinner
-        android:id="@+id/bottomSheetInsertFolderSpinner"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
         android:layout_marginBottom="16dp"
-        />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheetInsertFolderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:focusable="false"
+            android:layout_marginBottom="12dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </LinearLayout>
