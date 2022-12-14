@@ -8,6 +8,14 @@
     android:padding="8dp"
     tools:context=".NoteItemViewActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Item Information"
+        android:textColor="@color/blue"
+        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -42,21 +50,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Folder"
+        android:textColor="@color/blue"
         android:layout_marginBottom="8dp"
-        android:text="Miscellaneous"
-        android:textColor="@color/blue" />
+        />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/noteItemViewFolderLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Folder" />
-
-    <Spinner
-        android:id="@+id/noteItemViewSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:spinnerMode="dialog" />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/noteItemViewFolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:focusable="false"
+            android:layout_marginBottom="12dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

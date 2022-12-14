@@ -205,7 +205,7 @@ public class DB extends SQLiteOpenHelper {
         Note[] result = new Note[res.getCount()];
         int i = 0;
         while (res.moveToNext()) {
-            result[i] = new Note(res.getLong(0), res.getString(1), res.getString(2));
+            result[i] = new Note(res.getLong(0), res.getString(1), res.getString(2), res.getLong(3));
             i++;
         }
         return result;
@@ -223,7 +223,7 @@ public class DB extends SQLiteOpenHelper {
         Note[] result = new Note[res.getCount()];
         int i = 0;
         while (res.moveToNext()) {
-            result[i] = new Note(res.getLong(0), res.getString(1), res.getString(2));
+            result[i] = new Note(res.getLong(0), res.getString(1), res.getString(2), res.getLong(3));
             i++;
         }
         return result;
@@ -234,9 +234,9 @@ public class DB extends SQLiteOpenHelper {
         String sql = "select * from "+TABLE_NOTE_NAME+" WHERE "+COL_ID+" = "+noteID;
         Cursor res = db.rawQuery(sql,null);
         if (res.moveToNext()) {
-            return new Note(res.getLong(0), res.getString(1), res.getString(2));
+            return new Note(res.getLong(0), res.getString(1), res.getString(2), res.getLong(3));
         }
-        return new Note(-1, "", "");
+        return new Note(-1, "", "", -1);
     }
 
 
@@ -262,6 +262,8 @@ public class DB extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_NOTE_NAME, note.name);
         contentValues.put(COL_NOTE_TEXT, note.note);
+        if (note.folder_id > 0) contentValues.put(COL_LOGIN_FOLDER_ID, note.folder_id);
+        else contentValues.putNull(COL_LOGIN_FOLDER_ID);
         db.update(TABLE_NOTE_NAME, contentValues, COL_ID+"=?", new String[]{String.valueOf(note.id)});
         db.close();
     }
