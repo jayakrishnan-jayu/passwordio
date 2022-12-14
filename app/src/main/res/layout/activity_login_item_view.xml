@@ -81,6 +81,31 @@
                 android:layout_marginBottom="12dp"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Folder"
+            android:textColor="@color/blue"
+            android:layout_marginBottom="8dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginItemViewFolderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginItemViewFolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:focusable="false"
+                android:layout_marginBottom="12dp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
 

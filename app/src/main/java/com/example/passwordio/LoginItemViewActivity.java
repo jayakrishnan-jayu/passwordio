@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.passwordio.models.Folder;
 import com.example.passwordio.models.Login;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -23,18 +26,32 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
     TextInputEditText uri;
 
     DB db;
-
     Login login;
 
+    Folder[] folders;
+    TextInputEditText folder;
     TextView actionBarTitle, actionBarSave, actionBarEdit, actionBarCancel;
     View supportActionBar;
+    long folder_id = -1;
     com.google.android.material.textfield.TextInputLayout uriLayout;
 
     private void update() {
         username.setEnabled(false);
         password.setEnabled(false);
+        folder.setEnabled(false);
         uri.setEnabled(false);
-
+        String result = "No Folder";
+        if (login.folder_id > 0) {
+            for (Folder f: folders) {
+                if (f.id == login.folder_id) {
+                    result = f.name;
+                    folder_id = login.folder_id;
+                    break;
+                }
+            }
+        }
+        if (result.equals("No Folder")) folder_id = -1;
+        folder.setText(result);
         username.setText(login.username);
         password.setText(login.password);
         uri.setText(login.url.substring(8));
@@ -65,6 +82,7 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
         password = findViewById(R.id.loginItemViewPassowrd);
         uri = findViewById(R.id.loginItemViewURI);
 
+        folder = findViewById(R.id.loginItemViewFolder);
         actionBarEdit.setOnClickListener(this);
         actionBarSave.setOnClickListener(this);
         actionBarCancel.setOnClickListener(this);
@@ -72,8 +90,11 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
         username.addTextChangedListener(new GenericTextWatcher(username));
         password.addTextChangedListener(new GenericTextWatcher(password));
         uri.addTextChangedListener(new GenericTextWatcher(uri));
+        folder.setOnClickListener(this);
 
         login = (Login) getIntent().getSerializableExtra("login");
+        folders = db.allFolders();
+
         update();
 
         uriLayout.setEndIconOnClickListener(new View.OnClickListener() {
@@ -90,6 +111,7 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
                 }
             }
         });
+
     }
 
     @Override
@@ -105,6 +127,7 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
                 username.setEnabled(true);
                 password.setEnabled(true);
                 uri.setEnabled(true);
+                folder.setEnabled(true);
 
                 break;
             case R.id.actionBarCancel:
@@ -116,6 +139,10 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
                 update();
                 break;
             case R.id.actionBarSave:
+
+                Log.v("LoginItemViewActivity", "Save");
+                Log.v("LoginItemViewActivity", "folder id " + login.folder_id);
+                Log.v("LoginItemViewActivity", login.username + " " + login.folder_id);
                 db.updateLogin(login);
                 actionBarEdit.setVisibility(View.VISIBLE);
                 actionBarCancel.setVisibility(View.GONE);
@@ -123,6 +150,29 @@ public class LoginItemViewActivity extends AppCompatActivity implements View.OnC
                 actionBarTitle.setText("View Item");
                 login = db.loginsByID(login.id);
                 update();
+                break;
+            case R.id.loginItemViewFolder:
+                PopupMenu menu = new PopupMenu(view.getContext(), view);
+                menu.getMenu().add("No Folder");
+                for (Folder folder: folders) {
+                    menu.getMenu().add(folder.name);
+                }
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        folder.setText(menuItem.getTitle());
+                        login.folder_id = -1;
+                        for (Folder f: folders) {
+                            if (f.name.equals(menuItem.getTitle().toString())) {
+                                Log.v("LoginItemViewActivity", "New id " + f.id);
+                                login.folder_id = f.id;
+                                break;
+                            }
+                        }
+                        return false;
+                    }
+                });
+                menu.show();
                 break;
         }
     }

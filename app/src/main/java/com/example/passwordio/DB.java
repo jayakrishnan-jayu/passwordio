@@ -125,7 +125,7 @@ public class DB extends SQLiteOpenHelper {
         Login[] result = new Login[res.getCount()];
         int i = 0;
         while (res.moveToNext()) {
-            result[i] = new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3));
+            result[i] = new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3), res.getLong(4));
             i++;
         }
         return result;
@@ -143,7 +143,7 @@ public class DB extends SQLiteOpenHelper {
         Login[] result = new Login[res.getCount()];
         int i = 0;
         while (res.moveToNext()) {
-            result[i] = new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3));
+            result[i] = new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3), res.getLong(4));
             i++;
         }
         return result;
@@ -154,9 +154,9 @@ public class DB extends SQLiteOpenHelper {
         String sql = "select * from "+TABLE_LOGIN_NAME+" WHERE "+COL_ID+" = "+loginID;
         Cursor res = db.rawQuery(sql,null);
         if (res.moveToNext()) {
-            return new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3));
+            return new Login(res.getLong(0), res.getString(1), res.getString(2), res.getString(3), res.getLong(4));
         }
-        return new Login(-1, "", "", "");
+        return new Login(-1, "", "", "", -1);
     }
 
     public long createLogin(String username, String password, String url){
@@ -183,6 +183,12 @@ public class DB extends SQLiteOpenHelper {
         contentValues.put(COL_LOGIN_USERNAME, login.username);
         contentValues.put(COL_LOGIN_PASSWORD, login.password);
         contentValues.put(COL_LOGIN_URL, login.url);
+        if (login.folder_id > 0) contentValues.put(COL_LOGIN_FOLDER_ID, login.folder_id);
+        else contentValues.putNull(COL_LOGIN_FOLDER_ID);
+
+        Log.v("DB", login.username);
+        Log.v("DB", "Folder ID "+ login.folder_id);
+        Log.v("DB", "updateLogin()");
         db.update(TABLE_LOGIN_NAME, contentValues, COL_ID+"=?", new String[]{String.valueOf(login.id)});
         db.close();
     }
