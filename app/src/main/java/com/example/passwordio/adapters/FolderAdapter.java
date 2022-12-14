@@ -48,7 +48,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.itemView.getContext(), FolderItemsActivity.class);
-                intent.putExtra("folder_id", folder.id);
+                intent.putExtra("folder", folder);
                 holder.itemView.getContext().startActivity(intent);
             }
         });

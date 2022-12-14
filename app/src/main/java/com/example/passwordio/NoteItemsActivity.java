@@ -47,8 +47,8 @@ public class NoteItemsActivity extends AppCompatActivity {
         addButton = supportActionBar.findViewById(R.id.actionBarAdd);
 
         actionBarTitle.setText("Secure Notes");
-        addButton.setVisibility(View.VISIBLE);
-        searchButton.setVisibility(View.VISIBLE);
+//        addButton.setVisibility(View.VISIBLE);
+//        searchButton.setVisibility(View.VISIBLE);
 
         rvNote = findViewById(R.id.noteItemsRV);
         count = findViewById(R.id.noteItemsCount);

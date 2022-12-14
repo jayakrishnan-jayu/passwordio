@@ -45,8 +45,8 @@ public class LoginItemsActivity extends AppCompatActivity {
         addButton = supportActionBar.findViewById(R.id.actionBarAdd);
 
         actionBarTitle.setText("Logins");
-        addButton.setVisibility(View.VISIBLE);
-        searchButton.setVisibility(View.VISIBLE);
+//        addButton.setVisibility(View.VISIBLE);
+//        searchButton.setVisibility(View.VISIBLE);
 
         rvLogin = findViewById(R.id.loginItemsRV);
         count = findViewById(R.id.loginItemsCount);
