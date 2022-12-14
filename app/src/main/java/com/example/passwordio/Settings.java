@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 
 import androidx.appcompat.app.ActionBar;
 
@@ -25,6 +26,9 @@ public class Settings {
     private static final String prefGenCapital = "genCapital";
     private static final String prefGenNumbers = "genNum";
     private static final String prefGenSpecial = "genSpecial";
+
+    private static final String prefUserName = "genUserName";
+    private static final String prefUserPasswd = "genUserPasswd";
 
     private static SharedPreferences sharedPreference;
     private static SharedPreferences.Editor editor;
@@ -71,8 +75,22 @@ public class Settings {
         editor.putBoolean(prefNewUser, b);
         editor.commit();
     }
-    
-    
+
+    public String getUserName() {
+        return sharedPreference.getString(prefUserName, "");
+    }
+    public void createNewUser(String email, String password) {
+        Log.v("Settings", "Creating account with "+email+" "+password);
+        editor.putString(prefUserName, email);
+        editor.putString(prefUserPasswd, password);
+        editor.commit();
+        setNewUser(false);
+    }
+
+    public boolean authenticated(String password) {
+        Log.v("Settings", "authenticated account with "+password+" "+sharedPreference.getString(prefUserPasswd, ""));
+        return sharedPreference.getString(prefUserPasswd, "").equals(password);
+    }
 
     public static void setCustomActionBar(ActionBar actionBar) {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);

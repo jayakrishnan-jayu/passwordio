@@ -2,6 +2,7 @@ package com.example.passwordio;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -34,6 +35,8 @@ public class DB extends SQLiteOpenHelper {
     public static final String COL_NOTE_NAME = "NOTE_NAME";
     public static final String COL_NOTE_TEXT = "NOTE_TEXT";
     public static final String COL_NOTE_FOLDER_ID = "FOLDER_ID";
+
+
 
 
     private static final String TASK_TABLE_FOLDER_CREATE = "create table "

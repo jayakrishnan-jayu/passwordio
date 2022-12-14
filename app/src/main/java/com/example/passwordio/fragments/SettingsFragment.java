@@ -16,6 +16,7 @@ import com.example.passwordio.DB;
 import com.example.passwordio.FolderItemViewActivity;
 import com.example.passwordio.FolderListActivity;
 import com.example.passwordio.R;
+import com.example.passwordio.Settings;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,6 +92,8 @@ public class SettingsFragment extends Fragment implements  View.OnClickListener 
                 break;
             case R.id.settingsDeleteDataButton:
                 db.deleteAllData();
+                Settings settings = new Settings(getContext());
+                settings.setNewUser(true);
                 Toast.makeText(view.getContext(), "Data Successfully Deleted", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fragmentSettingsFolderLayout:
