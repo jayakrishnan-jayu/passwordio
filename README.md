@@ -1,6 +1,6 @@
 # PasswordIO
 
-PasswordIO is a clone of the popular open-source password manager, Bitwarden. It was developed as a course project for the my undergraduate degree, and is not intended to be used as a real password manager app.
+PasswordIO is a clone of the popular open-source password manager, Bitwarden. It was developed as a course project for my undergraduate degree, and is not intended to be used as a real password manager app.
 
 ## Features
 - Add/Remove login information and secure notes
